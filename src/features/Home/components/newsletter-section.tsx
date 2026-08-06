@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function NewsletterSection() {
   return (
     <section className="bg-[var(--sand)]" id="contact">
@@ -19,12 +21,12 @@ export function NewsletterSection() {
             </p>
           </div>
 
-          <a
-            href="#contact"
-            className="inline-flex min-h-11 items-center justify-center border border-[#a87b31] px-8 py-4 text-[11px] uppercase tracking-[0.32em] text-[#b89354] transition-colors duration-200 hover:bg-[#b89354] hover:text-[#090909] focus:outline-none md:px-11"
+          <Link
+            href="/find-my-project"
+            className="inline-flex min-h-11 items-center justify-center border border-[#a87b31] px-8 py-4 text-[11px] uppercase tracking-[0.32em] !text-[#a87b31] transition-colors duration-200 hover:bg-[#b89354] hover:text-white focus:outline-none md:px-11"
           >
             List Your Property
-          </a>
+          </Link>
         </div>
       </div>
     </section>

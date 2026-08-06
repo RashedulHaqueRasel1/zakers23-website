@@ -167,7 +167,7 @@ export function InsightsPage() {
           <div className="insights-briefing-kicker">Exclusive Briefings</div>
           <h2>Receive Miami Market Intelligence</h2>
           <p>
-            Brett Fraser&apos;s exclusive list receives pre-launch pricing, off-market inventory, and
+            Zachary Akers&apos;s exclusive list receives pre-launch pricing, off-market inventory, and
             monthly market updates before anything reaches public channels.
           </p>
           <form className="insights-briefing-form">

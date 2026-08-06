@@ -1030,7 +1030,7 @@ export default function PropertyDetailPage({ slug }: { slug: string }) {
                     LUXURY REAL ESTATE ADVISOR
                   </span>
                   <h3 className="text-3xl md:text-4xl font-serif font-normal text-[#1c1f26] mb-3">
-                    Brett Fraser
+Zachary Akers
                   </h3>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-[#7c8498] font-light mb-6">
                     MR LUXURY GROUP &middot; ONE SOTHEBY&apos;S INTERNATIONAL REALTY

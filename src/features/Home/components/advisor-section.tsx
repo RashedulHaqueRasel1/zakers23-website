@@ -8,8 +8,8 @@ export function AdvisorSection() {
           <div className="relative aspect-[0.8/1] min-h-[420px] bg-[#d9d1c5]">
             <Image
               fill
-              src="https://frasermiami.s3.amazonaws.com/brett-fraser-headshot.jpg"
-              alt="Brett Fraser"
+              src="/images/imagereader.webp"
+              alt="Zachary Akers"
               className="object-cover"
             />
           </div>
@@ -31,7 +31,7 @@ export function AdvisorSection() {
               className="m-0 text-[42px] font-normal leading-[1.02] tracking-[-0.03em] text-[#182235] md:text-[60px]"
               style={{ fontFamily: "var(--font-serif), serif" }}
             >
-              Brett Fraser
+              Zachary Akers
             </h2>
 
             <p className="mt-3 text-[13px] uppercase tracking-[0.26em] text-[#7c8498]">
@@ -42,11 +42,7 @@ export function AdvisorSection() {
               className="mt-8 max-w-[32rem] text-[16px] leading-[1.72] text-[#2d3550]"
               style={{ fontFamily: "var(--font-serif), serif" }}
             >
-              Born and raised in the Cayman Islands, Brett brings buyers into Miami&apos;s best
-              pre-construction projects before they reach the open market. He advises a global
-              clientele across South Florida&apos;s luxury corridor, from Coral Gables to Sunny Isles,
-              as part of MR Luxury Group, consistently ranked among the top three new development
-              teams in Miami.
+Zach, is a veteran of 14 years in the real estate industry working both in sales, as well as luxury new-construction and development. Zach is adept at understanding the relationship between investment and emotional connection to your property. With vast experience working with homeowners from all walks of life and backgrounds, he understands that no home buyer or seller is the same, but they all want results. Zach will help you purchase or sell your property seamlessly and with integrity.
             </p>
           </div>
 

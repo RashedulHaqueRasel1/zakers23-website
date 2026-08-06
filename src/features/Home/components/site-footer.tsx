@@ -15,7 +15,7 @@ export function SiteFooter() {
             />
             <div className="border-t border-[rgba(210,176,114,0.5)] pt-5 text-[14px] leading-[1.55] text-[#596071]">
               <p className="m-0">Designed, Developed, and Presented by</p>
-              <p className="m-0 mt-2">Brett Fraser</p>
+              <p className="m-0 mt-2">Zachary Akers</p>
               <p className="m-0 mt-2">Global Real Estate Advisor</p>
               <p className="m-0 mt-2">ONE Sotheby&apos;s International Realty</p>
             </div>

@@ -472,7 +472,7 @@ export default function ComparePage() {
             Receive Miami Market Intelligence
           </h3>
           <p className="text-xs text-white/60 mb-6 leading-relaxed">
-            Brett Fraser&apos;s exclusive list receives pre-launch pricing, off-market inventory, and monthly market updates before anything reaches public channels.
+            Zachary Akers&apos;s exclusive list receives pre-launch pricing, off-market inventory, and monthly market updates before anything reaches public channels.
           </p>
           <form className="flex flex-col sm:flex-row gap-2 max-w-[480px] mx-auto">
             <input
@@ -527,7 +527,7 @@ export default function ComparePage() {
           <div>
             <h5 className="text-[10px] uppercase tracking-wider font-semibold text-white/95 mb-3">Company</h5>
             <div className="flex flex-col gap-2 font-light">
-              <span>Brett Fraser luxury Real Estate</span>
+              <span>Zachary Akers luxury Real Estate</span>
               <span>Miami, FL</span>
               <span>© {new Date().getFullYear()} All Rights Reserved.</span>
             </div>

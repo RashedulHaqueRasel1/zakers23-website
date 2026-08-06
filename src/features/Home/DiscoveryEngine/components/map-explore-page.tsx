@@ -1812,7 +1812,7 @@ export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePag
 
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 400, color: theme.ink, margin: "0 0 12px" }}>
               {modal === "advisor" 
-                ? "Connect with Brett Fraser" 
+                ? "Connect with Zachary Akers" 
                 : modal === "floors" 
                 ? "Request Floor Plans & Pricing" 
                 : "Register Early VIP Access"}
