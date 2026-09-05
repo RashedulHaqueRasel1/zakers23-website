@@ -9,6 +9,8 @@ import { Ht, getNeighborhoodNames, getNeighborhoodSlug } from "@/src/data/neighb
 import projectsRaw from "@/src/data/miami-projects.json";
 import FindMyProjectModal from "@/src/features/FindMyProject/components/FindMyProjectModal";
 import { SiteFooter } from "@/src/features/Home/components/site-footer";
+import { submitInquiry } from "@/src/lib/inquiry";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 // Type definitions
 interface MapProject {
@@ -123,6 +125,7 @@ function getImageUrl(path: string | null | undefined): string {
 
 export default function NeighborhoodDetailPage({ slug }: { slug: string }) {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const [isMatcherOpen, setIsMatcherOpen] = useState(false);
   const [stageFilter, setStageFilter] = useState<string>("all");
 
@@ -180,8 +183,13 @@ export default function NeighborhoodDetailPage({ slug }: { slug: string }) {
     setFormStatus("sending");
 
     try {
-      // Mock submit / send to local support system or api endpoint
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await submitInquiry({
+        name: formName,
+        email: formEmail,
+        message: formMessage,
+        source: "Website",
+        details: { Neighborhood: hood.name },
+      });
       setFormStatus("done");
       setFormName("");
       setFormEmail("");
@@ -411,7 +419,16 @@ export default function NeighborhoodDetailPage({ slug }: { slug: string }) {
           <span className="nav-divider" aria-hidden="true">
             ·
           </span>
-          <a href="/#contact">Inquire</a>
+          <a
+            href="/#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Inquire
+          </a>
         </nav>
       </header>
 

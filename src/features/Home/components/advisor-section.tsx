@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 export function AdvisorSection() {
+  const { openInquiry } = useInquiry();
   return (
     <section className="bg-[var(--sand)] px-5 py-14 md:px-7 md:py-20" id="advisor">
       <div className="mx-auto grid max-w-[1140px] grid-cols-1 gap-10 lg:grid-cols-[454px_minmax(0,1fr)] lg:gap-14">
@@ -111,6 +115,10 @@ Zach, is a veteran of 14 years in the real estate industry working both in sales
 
             <a
               href="#contact"
+              onClick={(event) => {
+                event.preventDefault();
+                openInquiry();
+              }}
               className="mt-7 inline-flex min-h-11 w-full items-center justify-center bg-[#bb9751] px-6 py-4 text-center text-[11px] uppercase tracking-[0.34em] text-white transition-colors duration-200 hover:bg-[#a88543] focus:outline-none"
             >
               Connect With Brett

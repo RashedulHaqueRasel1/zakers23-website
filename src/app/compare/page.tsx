@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import projectsRaw from "@/src/data/miami-projects.json";
 import { Ht } from "@/src/data/neighborhoods";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 interface Project {
   id: number;
@@ -28,6 +29,7 @@ interface Project {
 }
 
 export default function ComparePage() {
+  const { openInquiry } = useInquiry();
   const [compareIds, setCompareIds] = useState<number[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [replacingSlot, setReplacingSlot] = useState<number | null>(null); // index: 0 or 1
@@ -163,7 +165,16 @@ export default function ComparePage() {
           <span className="nav-divider" aria-hidden="true">
             ·
           </span>
-          <Link href="/#contact">Inquire</Link>
+          <Link
+            href="/#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Inquire
+          </Link>
         </nav>
       </header>
 

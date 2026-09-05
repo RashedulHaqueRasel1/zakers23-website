@@ -6,6 +6,7 @@ import mapboxgl from "mapbox-gl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AdvisorSection } from "@/src/features/Home/components/advisor-section";
 import { SiteFooter } from "@/src/features/Home/components/site-footer";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 type Tier = "sovereign" | "ultra-prime" | "prime";
 type BridgeAccess = "no-fixed-bridges" | "bridge-limited";
@@ -34,11 +35,6 @@ type Enclave = {
   dockageNote: string;
   priceFrom: string;
   bridgeAccess: BridgeAccess;
-};
-
-type WaterfrontInquiryModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
 };
 
 const bronze = "#c9a84c";
@@ -367,143 +363,13 @@ function formatCloseDate(date: string) {
   });
 }
 
-function WaterfrontInquiryModal({ isOpen, onClose }: WaterfrontInquiryModalProps) {
-  const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setSubmitted(false);
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="waterfront-modal-backdrop" onClick={onClose} role="presentation">
-      <div
-        className="waterfront-modal"
-        onClick={(event) => event.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="waterfront-modal-title"
-      >
-        <button type="button" className="waterfront-modal-close" onClick={onClose} aria-label="Close inquiry form">
-          ×
-        </button>
-
-        {submitted ? (
-          <div className="waterfront-modal-success">
-            <span className="waterfront-modal-kicker">Received</span>
-            <h3 id="waterfront-modal-title">I&apos;ll be in touch personally.</h3>
-            <p>
-              Thanks for reaching out. I&apos;ll follow up to talk through what you&apos;re looking
-              for, on-market and off-market.
-            </p>
-            <button type="button" className="waterfront-modal-submit" onClick={onClose}>
-              Close
-            </button>
-          </div>
-        ) : (
-          <>
-            <span className="waterfront-modal-kicker">Waterfront estates</span>
-            <h3 id="waterfront-modal-title">Tell me what you&apos;re looking for.</h3>
-            <p className="waterfront-modal-copy">
-              Share your budget, preferred enclaves, and timing. I&apos;ll come back with the right
-              opportunities and context.
-            </p>
-
-            <form
-              className="waterfront-modal-form"
-              onSubmit={(event) => {
-                event.preventDefault();
-                setSubmitted(true);
-              }}
-            >
-              <div className="waterfront-modal-grid">
-                <label className="waterfront-modal-field">
-                  <span>Full name</span>
-                  <input type="text" name="name" autoComplete="name" required />
-                </label>
-                <label className="waterfront-modal-field">
-                  <span>Email</span>
-                  <input type="email" name="email" autoComplete="email" required />
-                </label>
-              </div>
-
-              <div className="waterfront-modal-grid">
-                <label className="waterfront-modal-field">
-                  <span>Phone</span>
-                  <input type="tel" name="phone" autoComplete="tel" />
-                </label>
-                <label className="waterfront-modal-field">
-                  <span>Target budget</span>
-                  <select name="budget" defaultValue="">
-                    <option value="" disabled>
-                      Select range
-                    </option>
-                    <option>$25M to $50M</option>
-                    <option>$50M to $100M</option>
-                    <option>$100M and above</option>
-                    <option>Not sure yet</option>
-                  </select>
-                </label>
-              </div>
-
-              <label className="waterfront-modal-field">
-                <span>Preferred enclaves</span>
-                <input
-                  type="text"
-                  name="enclaves"
-                  placeholder="Indian Creek, Gables Estates, North Bay Road..."
-                />
-              </label>
-
-              <label className="waterfront-modal-field">
-                <span>Notes</span>
-                <textarea
-                  name="notes"
-                  rows={4}
-                  placeholder="Turnkey estate, dockage requirements, privacy, timeline..."
-                />
-              </label>
-
-              <button type="submit" className="waterfront-modal-submit">
-                Send inquiry
-              </button>
-            </form>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
 export default function WaterfrontPage() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<Record<string, mapboxgl.Marker>>({});
   const [selectedSale, setSelectedSale] = useState<Sale | null>(sales[0]);
   const [hoveredSaleId, setHoveredSaleId] = useState<string | null>(null);
-  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const { openInquiry } = useInquiry();
 
   const groupedSales = useMemo(
     () =>
@@ -659,7 +525,7 @@ export default function WaterfrontPage() {
             Waterfront Estates
           </Link>
           <Link href="/insights">Insights</Link>
-          <button type="button" className="waterfront-nav-trigger" onClick={() => setIsInquiryOpen(true)}>
+          <button type="button" className="waterfront-nav-trigger" onClick={() => openInquiry("Waterfront Estates")}>
             Inquire
           </button>
         </nav>
@@ -806,7 +672,7 @@ export default function WaterfrontPage() {
             <button
               type="button"
               className="waterfront-inquiry-button"
-              onClick={() => setIsInquiryOpen(true)}
+              onClick={() => openInquiry("Waterfront Estates")}
             >
               Start the conversation
             </button>
@@ -819,7 +685,6 @@ export default function WaterfrontPage() {
 
       <AdvisorSection />
       <SiteFooter />
-      <WaterfrontInquiryModal isOpen={isInquiryOpen} onClose={() => setIsInquiryOpen(false)} />
     </main>
   );
 }

@@ -8,9 +8,11 @@ import { Ht } from "@/src/data/neighborhoods";
 import { InsightCategory, insightArticles, insightCategories } from "@/src/data/insights";
 import FindMyProjectModal from "@/src/features/FindMyProject/components/FindMyProjectModal";
 import { SiteFooter } from "@/src/features/Home/components/site-footer";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 export function InsightsPage() {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const [activeCategory, setActiveCategory] = useState<InsightCategory>("All");
   const [isMatcherOpen, setIsMatcherOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -83,7 +85,15 @@ export function InsightsPage() {
           </Link>
         </nav>
         <div className="insights-header-tools">
-          <a href="#insights-briefing" className="insights-header-inquire">
+          <a
+            href="#insights-briefing"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+            className="insights-header-inquire"
+          >
             <span className="insights-nav-link-label">Inquire</span>
           </a>
           <div className="insights-weather-widget" aria-label="Miami weather">

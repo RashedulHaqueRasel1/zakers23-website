@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Ht, getNeighborhoodNames } from "@/src/data/neighborhoods";
 import projectsRaw from "@/src/data/miami-projects.json";
 import FindMyProjectModal from "@/src/features/FindMyProject/components/FindMyProjectModal";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 // Helper to get image URL
 function getImageUrl(path: string | null | undefined): string {
@@ -19,6 +20,7 @@ function getImageUrl(path: string | null | undefined): string {
 
 export default function NeighborhoodListPage() {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const [isMatcherOpen, setIsMatcherOpen] = useState(false);
 
   // Get active projects count and a representative image for each neighborhood
@@ -91,7 +93,16 @@ export default function NeighborhoodListPage() {
           <span className="nav-divider" aria-hidden="true">
             ·
           </span>
-          <a href="/#contact">Inquire</a>
+          <a
+            href="/#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Inquire
+          </a>
         </nav>
       </header>
 

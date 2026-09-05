@@ -8,6 +8,7 @@ import mapboxgl from "mapbox-gl";
 import projectsRaw from "@/src/data/miami-projects.json";
 import FindMyProjectModal, { Vt, MatcherPrefs } from "@/src/features/FindMyProject/components/FindMyProjectModal";
 import { Ht } from "@/src/data/neighborhoods";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 // Map Project Interface matching extracted schema
 export interface MapProject {
@@ -192,6 +193,7 @@ type MapExplorePageProps = {
 
 export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePageProps) {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const allProjects = projectsRaw as MapProject[];
 
   // States
@@ -733,7 +735,16 @@ export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePag
           <span className="nav-divider" aria-hidden="true">
             ·
           </span>
-          <Link href="/#contact">Inquire</Link>
+          <Link
+            href="/#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Inquire
+          </Link>
         </nav>
       </header>
 
@@ -1201,7 +1212,7 @@ export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePag
               <div className="map-bar-cta" style={{ display: "flex", alignItems: "center" }}>
                 <div style={{ width: 1, height: 14, background: theme.dune, margin: "0 8px 0 2px" }} />
                 <button
-                  onClick={() => { setModalProject(null); setModal("advisor"); }}
+                  onClick={() => openInquiry("Discovery Map")}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -1331,7 +1342,7 @@ export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePag
                   Pre-construction inventory shifts constantly. Speak with Brett to find off-market units.
                 </p>
                 <button
-                  onClick={() => { setModalProject(null); setModal("advisor"); }}
+                  onClick={() => openInquiry("Discovery Map")}
                   style={{
                     padding: "12px 28px", background: theme.ink, color: theme.cream, border: "none",
                     fontFamily: "'DM Sans', sans-serif", fontSize: 9.5, letterSpacing: "0.22em",
@@ -1473,7 +1484,7 @@ export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePag
               <div style={{ padding: "24px 18px", fontSize: 12, lineHeight: 1.55, color: theme.mist, fontWeight: 300 }}>
                 No properties in this map area. Pan or zoom the map to explore Miami.
                 <button
-                  onClick={() => { setModalProject(null); setModal("advisor"); }}
+                  onClick={() => openInquiry("Discovery Map")}
                   style={{
                     display: "block", marginTop: 12, padding: 0, border: "none", background: "transparent",
                     color: theme.bronze, fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase",
@@ -1563,7 +1574,7 @@ export function MapExplorePage({ projectNames, featuredProjects }: MapExplorePag
 
           {/* speak with advisor bottom block */}
           <button
-            onClick={() => { setModalProject(null); setModal("advisor"); }}
+            onClick={() => openInquiry("Discovery Map")}
             className="map-sidebar-connect-mobile"
             style={{
               width: "100%",

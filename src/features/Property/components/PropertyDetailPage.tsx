@@ -9,6 +9,8 @@ import projectsRaw from "@/src/data/miami-projects.json";
 import { SiteFooter } from "@/src/features/Home/components/site-footer";
 import FindMyProjectModal from "@/src/features/FindMyProject/components/FindMyProjectModal";
 import { Ht } from "@/src/data/neighborhoods";
+import { submitInquiry } from "@/src/lib/inquiry";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 interface MapProject {
   id: number;
@@ -94,6 +96,7 @@ function formatPriceStr(price: string | number | null | undefined): string {
 
 export default function PropertyDetailPage({ slug }: { slug: string }) {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const [isMatcherOpen, setIsMatcherOpen] = useState(false);
   const [activeImgIdx, setActiveImgIdx] = useState<number | null>(null);
 
@@ -283,6 +286,7 @@ export default function PropertyDetailPage({ slug }: { slug: string }) {
   // Handle inquiry submit
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!project) return;
     if (!formEmail.trim()) {
       setFormStatus("error");
       return;
@@ -290,7 +294,13 @@ export default function PropertyDetailPage({ slug }: { slug: string }) {
     setFormStatus("sending");
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await submitInquiry({
+        name: formName,
+        email: formEmail,
+        message: formMessage,
+        source: "Website",
+        details: { Property: project.name },
+      });
       setFormStatus("done");
       setFormName("");
       setFormEmail("");
@@ -429,7 +439,16 @@ export default function PropertyDetailPage({ slug }: { slug: string }) {
           <span className="nav-divider" aria-hidden="true">
             ·
           </span>
-          <Link href="/#contact">Inquire</Link>
+          <Link
+            href="/#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry(project?.name);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Inquire
+          </Link>
         </nav>
       </header>
 
@@ -916,9 +935,17 @@ export default function PropertyDetailPage({ slug }: { slug: string }) {
                       </span>
                     </td>
                     <td className="p-4 pr-6 text-right font-sans">
-                      <a href="#contact-section" className="text-[#B38E36] uppercase tracking-[0.15em] text-[10px] font-semibold hover:underline">
-                        Inquire &rarr;
-                      </a>
+                      <a
+                      href="#contact-section"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        openInquiry(project?.name);
+                      }}
+                      style={{ cursor: "pointer" }}
+                      className="text-[#B38E36] uppercase tracking-[0.15em] text-[10px] font-semibold hover:underline"
+                    >
+                      Inquire &rarr;
+                    </a>
                     </td>
                   </tr>
                 ))}

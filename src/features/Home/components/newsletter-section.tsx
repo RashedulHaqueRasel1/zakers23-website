@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 export function NewsletterSection() {
+  const { openInquiry } = useInquiry();
   return (
     <section className="bg-[var(--sand)]" id="contact">
       <div className="bg-[#0a0a0a] px-5 py-12 md:px-8 lg:px-12 xl:px-[360px]">
@@ -23,6 +27,10 @@ export function NewsletterSection() {
 
           <Link
             href="/find-my-project"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry("List Your Property");
+            }}
             className="inline-flex min-h-11 items-center justify-center border border-[#a87b31] px-8 py-4 text-[11px] uppercase tracking-[0.32em] !text-[#a87b31] transition-colors duration-200 hover:bg-[#b89354] hover:text-white focus:outline-none md:px-11"
           >
             List Your Property

@@ -8,6 +8,7 @@ import { Ht } from "@/src/data/neighborhoods";
 import { insightArticles } from "@/src/data/insights";
 import FindMyProjectModal from "@/src/features/FindMyProject/components/FindMyProjectModal";
 import { SiteFooter } from "@/src/features/Home/components/site-footer";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 interface InsightDetailPageProps {
   slug: string;
@@ -15,6 +16,7 @@ interface InsightDetailPageProps {
 
 export function InsightDetailPage({ slug }: InsightDetailPageProps) {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const [isMatcherOpen, setIsMatcherOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -154,7 +156,15 @@ export function InsightDetailPage({ slug }: InsightDetailPageProps) {
           </Link>
         </nav>
         <div className="insights-header-tools">
-          <a href="#insights-briefing" className="insights-header-inquire">
+          <a
+            href="#insights-briefing"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+            className="insights-header-inquire"
+          >
             <span className="insights-nav-link-label">Inquire</span>
           </a>
           <div className="insights-weather-widget" aria-label="Miami weather">

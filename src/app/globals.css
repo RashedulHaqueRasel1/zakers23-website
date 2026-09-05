@@ -2041,3 +2041,75 @@ input[type="range"] {
   color: #6f7480;
 }
 
+
+/* Shared private consultation dialog. */
+.consultation-backdrop { position: fixed; inset: 0; z-index: 11000; display: flex; align-items: center; justify-content: center; padding: 20px 16px; background: rgba(28,31,38,.7); backdrop-filter: blur(8px); }
+.consultation-modal { position: relative; width: 540px; max-width: 100%; max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; padding: 38px 40px 30px; background: #fafaf8; color: #1c1f26; box-shadow: 0 24px 90px #0003; font-family: var(--font-sans), sans-serif; }
+.consultation-close { position: absolute; top: 28px; right: 36px; width: 28px; height: 28px; border: 0; background: transparent; color: #737887; font-size: 20px; cursor: pointer; }
+.consultation-kicker { display: block; margin-bottom: 18px; padding-right: 32px; color: #b89354; font-size: 8px; letter-spacing: .3em; text-transform: uppercase; }
+.consultation-heading { display: flex; align-items: center; gap: 8px; }
+.consultation-avatar { width: 64px; height: 64px; flex-shrink: 0; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 1px solid #ddd8cd; }
+.consultation-modal h3 { margin: 0; font-family: var(--font-serif), serif; font-size: 25px; line-height: 1.3; font-weight: 400; letter-spacing: -.035em; }
+.consultation-modal h3 em { font-weight: 400; }
+.consultation-description, .consultation-success p { margin: 5px 0 0; color: #788092; font-size: 11px; line-height: 1.8; }
+.consultation-context { margin: 10px 0 0; color: #9a7947; font-size: 11px; }
+.consultation-form { margin-top: 26px; }
+.consultation-fields { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); column-gap: 14px; row-gap: 20px; }
+.consultation-fields input, .consultation-fields select, .consultation-fields textarea { width: 100%; min-width: 0; height: 46px; padding: 12px 0; border: 0; border-bottom: 1px solid #e1ddd6; border-radius: 0; background: transparent; color: #343944; font: inherit; font-size: 13px; outline: none; transition: border-color .2s; }
+.consultation-fields input::placeholder, .consultation-fields textarea::placeholder { color: #a5a19b; opacity: 1; }
+.consultation-fields select { appearance: none; padding-right: 22px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m3 4.5 3 3 3-3' fill='none' stroke='%23a5a19b' stroke-width='1.2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 2px center; cursor: pointer; }
+.consultation-fields select:invalid { color: #a5a19b; }
+.consultation-fields select option { color: #343944; background: #fafaf8; }
+.consultation-fields textarea { height: 84px; resize: vertical; margin-top: 4px; }
+.consultation-fields input:focus, .consultation-fields select:focus, .consultation-fields textarea:focus { border-bottom-color: #b89354; }
+.consultation-submit { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 40px; margin-top: 24px; padding: 12px; border: 0; border-radius: 1px; background: #1c1f26; color: #fff; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; cursor: pointer; transition: background .2s; }
+.consultation-submit:hover { background: #343944; }
+.consultation-submit:disabled { opacity: .6; cursor: wait; }
+.consultation-alternatives { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 16px; }
+.consultation-whatsapp { display: inline-flex; align-items: center; gap: 8px; padding: 5px 8px; border: 1px solid #d6d7d8; color: #343944; font-size: 11px; line-height: 17px; letter-spacing: .1em; text-transform: uppercase; }
+.consultation-whatsapp:hover { background: #efefeb; }
+.consultation-dismiss { padding: 2px 10px; border: 0; background: transparent; color: #737887; font-size: 10px; cursor: pointer; }
+.consultation-modal button:focus-visible, .consultation-modal a:focus-visible { outline: 2px solid #b89354; outline-offset: 4px; }
+.consultation-error { margin: 12px 0 0; color: #b91c1c; font-size: 12px; line-height: 1.6; }
+.consultation-brands { display: flex; align-items: center; justify-content: center; gap: 32px; margin-top: 16px; padding-top: 20px; border-top: 1px solid #e1ddd6; color: #989996; }
+.consultation-mr { display: flex; align-items: center; gap: 9px; font-family: var(--font-serif), serif; }
+.consultation-mr > span:first-child { font-size: 32px; font-weight: 400; letter-spacing: -.1em; line-height: 1; padding-right: 10px; border-right: 1px solid #d2d2ce; }
+.consultation-mr > span:last-child { font-size: 12px; text-transform: uppercase; white-space: nowrap; letter-spacing: .035em; }
+.consultation-sothebys { display: flex; align-items: center; gap: 8px; }
+.consultation-sothebys > span { font-size: 15px; font-weight: 300; }
+.consultation-sothebys > div { border-left: 1px solid #d2d2ce; padding-left: 8px; font-family: Georgia, serif; font-size: 20px; line-height: 1.1; }
+.consultation-sothebys small { display: block; margin-top: 3px; font-family: var(--font-sans), sans-serif; font-size: 5px; letter-spacing: .02em; text-transform: uppercase; }
+.consultation-success { padding-block: 20px; }
+@media (max-width: 480px) {
+  .consultation-modal { padding: 30px 22px 24px; }
+  .consultation-close { top: 20px; right: 18px; }
+  .consultation-modal h3 { font-size: 22px; }
+  .consultation-avatar { width: 52px; height: 52px; }
+  .consultation-brands { gap: 18px; }
+  .consultation-mr > span:first-child { font-size: 26px; }
+  .consultation-mr > span:last-child { font-size: 9px; }
+  .consultation-sothebys > div { font-size: 17px; }
+  .consultation-fields input, .consultation-fields select, .consultation-fields textarea { font-size: 16px; }
+}
+@media (max-width: 360px) {
+  .consultation-fields { grid-template-columns: 1fr; row-gap: 12px; }
+  .consultation-brands { flex-wrap: wrap; }
+}
+
+.consultation-select { position: relative; min-width: 0; }
+.consultation-select.is-open { z-index: 20; }
+.consultation-fields .consultation-native-select { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
+.consultation-select-trigger { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 46px; padding: 12px 2px 12px 0; border: 0; border-bottom: 1px solid #e1ddd6; background: transparent; color: #a5a19b; font: inherit; font-size: 13px; text-align: left; cursor: pointer; transition: border-color .2s, color .2s; }
+.consultation-select-trigger.has-value { color: #343944; }
+.consultation-select-trigger svg { flex-shrink: 0; transition: transform .2s; }
+.consultation-select-trigger:hover, .consultation-select.is-open .consultation-select-trigger { border-bottom-color: #b89354; color: #9a7947; }
+.consultation-select.is-open .consultation-select-trigger svg { transform: rotate(180deg); }
+.consultation-select-trigger[aria-invalid="true"] { border-bottom-color: #b91c1c; }
+.consultation-select-error { display: block; margin-top: 4px; color: #b91c1c; font-size: 10px; }
+.consultation-select-menu { position: absolute; top: calc(100% + 7px); left: 0; right: 0; overflow-y: auto; overscroll-behavior: contain; padding: 5px; border: 1px solid #e6dfd3; border-radius: 5px; background: #fdfcf9; box-shadow: 0 12px 30px rgba(28,31,38,.13), 0 2px 5px rgba(28,31,38,.04); scrollbar-width: thin; scrollbar-color: #c8b799 transparent; }
+.consultation-select-menu.opens-above { top: auto; bottom: calc(100% + 7px); }
+.consultation-select-option { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 38px; padding: 9px 10px; border-radius: 3px; color: #52545a; font-size: 12px; line-height: 1.5; cursor: pointer; transition: background .12s, color .12s; }
+.consultation-select-option.is-active { background: #f1ece2; color: #896932; }
+.consultation-select-option[aria-selected="true"] { color: #896932; font-weight: 500; }
+.consultation-select-option svg { flex-shrink: 0; }
+@media (max-width: 480px) { .consultation-select-trigger { font-size: 16px; } .consultation-select-option { min-height: 44px; font-size: 13px; } }

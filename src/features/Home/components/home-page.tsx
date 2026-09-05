@@ -17,9 +17,11 @@ import { SubscriberSection } from "@/src/features/Home/components/subscriber-sec
 import { SiteFooter } from "@/src/features/Home/components/site-footer";
 import FindMyProjectModal from "@/src/features/FindMyProject/components/FindMyProjectModal";
 import { Ht } from "@/src/data/neighborhoods";
+import { useInquiry } from "@/src/features/inquiry/components/inquiry-provider";
 
 export function HomePage() {
   const router = useRouter();
+  const { openInquiry } = useInquiry();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMatcherOpen, setIsMatcherOpen] = useState(false);
 
@@ -87,7 +89,16 @@ export function HomePage() {
           <span className="nav-divider" aria-hidden="true">
             ·
           </span>
-          <a href="#contact">Inquire</a>
+          <a
+            href="#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              openInquiry();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Inquire
+          </a>
         </nav>
       </header>
 

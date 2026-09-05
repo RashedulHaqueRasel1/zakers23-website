@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CompareFloatingBar } from "@/src/components/CompareFloatingBar";
 import LenisProvider from "@/src/components/LenisProvider";
+import { InquiryProvider } from "@/src/features/inquiry/components/inquiry-provider";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./globals.css";
 
@@ -15,7 +16,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <LenisProvider>
-          {children}
+          <InquiryProvider>
+            {children}
+          </InquiryProvider>
         </LenisProvider>
         <CompareFloatingBar />
       </body>
