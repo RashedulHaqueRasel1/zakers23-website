@@ -9,6 +9,4 @@ yarn-error.log*
 config.bat
 
 # env files (secrets)
-.env
 .env*.local
-.env.local

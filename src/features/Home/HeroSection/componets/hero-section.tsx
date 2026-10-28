@@ -11,14 +11,23 @@ type HeroSectionProps = {
 };
 
 export function HeroSection({ slides }: HeroSectionProps) {
-  const { heroRef, activeSlide, setActiveSlide, showNextSlide, showPrevSlide, handleHeroWheel } =
-    useHeroSlider({ slideCount: slides.length });
+  const {
+    heroRef,
+    activeSlide,
+    setActiveSlide,
+    showNextSlide,
+    showPrevSlide,
+    handleTouchStart,
+    handleTouchEnd,
+  } = useHeroSlider({ slideCount: slides.length });
 
   return (
     <section
       ref={heroRef}
       className="hero hero-scroll-lock"
       id="top"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="hero-sticky-frame">
         {slides.map((slide, index) => (
@@ -38,25 +47,35 @@ export function HeroSection({ slides }: HeroSectionProps) {
             />
             <div className="hero-gradient hero-gradient-top" />
             <div className="hero-gradient hero-gradient-bottom" />
-            <div className="hero-copy">
-               <p className="hero-eyebrow">{slide.eyebrow}</p>
-               {index === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}
-               <p className="hero-supporting">{slide.supporting}</p>
-             </div>
-             <div className="hero-actions">
-               {slide.slug ? (
-                 <Link className="cta-primary" href={`/property/${slide.slug}`}>
-                   View project
-                 </Link>
-               ) : (
-                 <a className="cta-primary" href="#featured-projects">
-                   View project
-                 </a>
-               )}
-               <p className="hero-credit">{slide.credit}</p>
-             </div>
+            <div className="hero-content">
+              <div className="hero-copy">
+                <p className="hero-eyebrow">{slide.eyebrow}</p>
+                {index === 0 ? <h1>{slide.title}</h1> : <h2>{slide.title}</h2>}
+                <p className="hero-supporting">{slide.supporting}</p>
+              </div>
+              <div className="hero-actions">
+                {slide.slug ? (
+                  <Link className="cta-primary" href={`/property/${slide.slug}`}>
+                    View project
+                  </Link>
+                ) : (
+                  <a className="cta-primary" href="#featured-projects">
+                    View project
+                  </a>
+                )}
+                <p className="hero-credit">{slide.credit}</p>
+              </div>
+            </div>
           </div>
         ))}
+
+        {/* Slide Counter for Mobile */}
+        <div className="hero-mobile-counter" aria-hidden="true">
+          <span>0{activeSlide + 1}</span>
+          <span className="hero-mobile-counter-divider">/</span>
+          <span>0{slides.length}</span>
+        </div>
+
         <div className="hero-nav-cluster" aria-label="Hero navigation">
           <button type="button" className="hero-arrow" onClick={showPrevSlide} aria-label="Previous slide">
             <ArrowIcon direction="left" />

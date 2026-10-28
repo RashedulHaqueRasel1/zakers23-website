@@ -25,14 +25,39 @@ export function useHeroSlider({ slideCount }: UseHeroSliderOptions) {
     }, 650);
   };
 
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+
   const showNextSlide = () => {
-    const nextIndex = Math.min(activeSlide + 1, slideCount - 1);
+    const nextIndex = (activeSlide + 1) % slideCount;
     goToSlide(nextIndex);
   };
 
   const showPrevSlide = () => {
-    const prevIndex = Math.max(activeSlide - 1, 0);
+    const prevIndex = (activeSlide - 1 + slideCount) % slideCount;
     goToSlide(prevIndex);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    touchStartXRef.current = event.touches[0].clientX;
+    touchStartYRef.current = event.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLElement>) => {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    const deltaX = event.changedTouches[0].clientX - touchStartXRef.current;
+    const deltaY = event.changedTouches[0].clientY - touchStartYRef.current;
+
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+      if (deltaX < 0) {
+        showNextSlide();
+      } else {
+        showPrevSlide();
+      }
+    }
+
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
   };
 
   const handleHeroWheel = (event: React.WheelEvent<HTMLElement>) => {
@@ -126,12 +151,38 @@ export function useHeroSlider({ slideCount }: UseHeroSliderOptions) {
     };
   }, [activeSlide, slideCount, lenis]);
 
+  // Auto-swap slides every 3 seconds ONLY on mobile (< 1024px)
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      // Only swap on mobile/tablet screens (< 1024px) and when page is active
+      if (typeof window === "undefined" || window.innerWidth >= 1024 || document.hidden) {
+        return;
+      }
+
+      // Pause if hero is scrolled out of view
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
+          return;
+        }
+      }
+
+      goToSlide((activeSlide + 1) % slideCount);
+    }, 3000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [activeSlide, slideCount]);
+
   return {
     heroRef,
     activeSlide,
     setActiveSlide: goToSlide,
     showNextSlide,
     showPrevSlide,
-    handleHeroWheel
+    handleHeroWheel,
+    handleTouchStart,
+    handleTouchEnd,
   };
 }
